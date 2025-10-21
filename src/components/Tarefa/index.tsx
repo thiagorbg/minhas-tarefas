@@ -1,32 +1,40 @@
 import { useState } from 'react'
 import * as s from './styles'
 
+import * as enums from '../utils/enums/tarefa'
+
 type props = {
   titulo: string
-  prioridade: string
-  status: string
+  prioridade: enums.Prioridade
+  status: enums.Status
   descricao: string
 }
 
-const Tarefa = ({ titulo, prioridade, status, descricao }: props) => {
+const Tarefa = ({ descricao, prioridade, status, titulo }: props) => {
   const [estaEditando, setEstaEditando] = useState(false)
 
   return (
     <s.Card>
       <s.Titulo>{titulo}</s.Titulo>
-      <s.Tag>{prioridade}</s.Tag>
-      <s.Tag>{status}</s.Tag>
+      <s.Tag parametro="prioridade" prioridade={prioridade}>
+        {prioridade}
+      </s.Tag>
+      <s.Tag parametro="status" status={status}>
+        {status}
+      </s.Tag>
       <s.Descricao value={descricao} />
       <s.BarraAcoes>
         {estaEditando ? (
           <>
-            <s.Botao>Salvar</s.Botao>
-            <s.Botao onClick={() => setEstaEditando(false)}>Cancelar</s.Botao>
+            <s.BotaoSalvar>Salvar</s.BotaoSalvar>
+            <s.BotaoCancelarRemoverr onClick={() => setEstaEditando(false)}>
+              Cancelar
+            </s.BotaoCancelarRemoverr>
           </>
         ) : (
           <>
             <s.Botao onClick={() => setEstaEditando(true)}>Editar</s.Botao>
-            <s.Botao>Remover</s.Botao>
+            <s.BotaoCancelarRemoverr>Remover</s.BotaoCancelarRemoverr>
           </>
         )}
       </s.BarraAcoes>
